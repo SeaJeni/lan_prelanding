@@ -1,7 +1,9 @@
-import { DataTypes } from "sequelize";
+'use strict';
 
-export default (sequelize) => {
-  const User = sequelize.define("User", {
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
+  const User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -14,3 +16,4 @@ export default (sequelize) => {
 
   return User;
 };
+

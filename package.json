@@ -2,11 +2,12 @@
   "name": "lan_prelanding",
   "version": "1.0.0",
   "description": "",
-  "main": "index.mjs",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.mjs",
-    "dev": "nodemon ./src/index.mjs"
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "db:migrate": "npx sequelize-cli db:migrate --config src/db/config/config.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,5 @@
   "devDependencies": {
     "nodemon": "^3.1.11",
     "sequelize-cli": "^6.6.3"
-  },
-  "type": "module"
+  }
 }
