@@ -1,9 +1,7 @@
-// routes/index.js
 const express = require('express');
 const router = express.Router();
+const PrelandingController = require("../controllers/prelandingController");
 
-router.get('/', (req, res) => {
-  res.send('fff');
-});
+router.post("/api/prelanding/create", PrelandingController.create);
 
 module.exports = router;
