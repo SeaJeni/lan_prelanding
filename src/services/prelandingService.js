@@ -2,7 +2,6 @@ const db = require("../db/models");
 
 module.exports = {
   async createPrelanding(data) {
-    console.log("Creating prelanding with data:", data);
     const { templateName, subdomain, templateData } = data;
 
     if (!templateName || typeof templateName !== "string") {
@@ -31,5 +30,10 @@ module.exports = {
     });
 
     return item;
-  }
+  },
+  async getPrelandingBySubdomain(subdomain) {
+   return await db.Prelanding.findOne({
+     where: { subdomain }
+   });
+  }  
 };
