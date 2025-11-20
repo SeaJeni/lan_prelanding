@@ -7,5 +7,6 @@ router.post("/api/prelanding/create", PrelandingController.create);
 router.get("/api/prelanding/data", PrelandingController.data);
 
 router.post("/api/subscriptions/email", SubscriptionsController.email);
+router.post("/api/subscriptions/push", SubscriptionsController.push);
 
 module.exports = router;

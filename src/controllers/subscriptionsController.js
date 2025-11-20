@@ -29,5 +29,8 @@ module.exports = {
                 message: "Internal server error" 
             });
         }
+    },
+    async push(req, res) { 
+        
     }
 };
