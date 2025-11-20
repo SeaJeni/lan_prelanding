@@ -6,19 +6,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {}
   }
   PushSubscription.init({
-    enspoint: {
+    endpoint: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
-    p256dh_key: {
+    p256dh: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      field: 'p256dh_key'
     },
-    auth_key: {
+    auth: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
+      allowNull: false,
+      field: 'auth_key'
+    }
   }, {
     sequelize,
     modelName: 'PushSubscription',

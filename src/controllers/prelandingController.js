@@ -1,6 +1,7 @@
 const PrelandingService = require("../services/prelandingService");
 const { getSubdomain } = require("../helpers/getSubdomain");
 const { buildUrl } = require("../helpers/buildUrl");
+const handleError = require("../helpers/errorHandler");
 
 
 module.exports = {
@@ -12,14 +13,7 @@ module.exports = {
         url: url,
       });
     } catch (error) {
-      if (error.type === "validation") {
-        return res.status(400).json({ error: error.message });
-      }
-      if (error.type === "conflict") {
-        return res.status(409).json({ error: error.message });
-      }
-      console.error(error);
-      return res.status(500).json({ error: "Internal server error" });
+      return handleError(res, error);
     }
   },
   async data(req, res) {

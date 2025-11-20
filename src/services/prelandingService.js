@@ -1,35 +1,23 @@
 const db = require("../db/models");
+const { isValidString, isDuplicate, isValidObject } = require("../helpers/validation");
 
 module.exports = {
   async createPrelanding(data) {
     const { templateName, subdomain, templateData } = data;
 
-    if (!templateName || typeof templateName !== "string") {
-      throw { type: "validation", message: "templateName is required and must be a string" };
-    }
-
-    if (!subdomain || typeof subdomain !== "string") {
-      throw { type: "validation", message: "subdomain is required and must be a string" };
-    }
-
-    if (!templateData || typeof templateData !== "object") {
-      throw { type: "validation", message: "templateData must be a JSON object" };
-    }
-
-    const exists = await db.Prelanding.findOne({ where: { subdomain } });
-
-    if (exists) {
-      throw { type: "conflict", message: "Subdomain already exists" };
-    }
-
+    isValidString(templateName);
+    isValidString(subdomain);
+    isValidObject(templateData);
+    await isDuplicate("Prelanding", "subdomain", subdomain);
+    
+  
     const item = await db.Prelanding.create({
       templateName,
       subdomain,
-      templateData,
-      status: "pending"
+      templateData,  
+      status: "pending"   
     });
-
-    return item;
+    return item; 
   },
   async getPrelandingBySubdomain(subdomain) {
    return await db.Prelanding.findOne({

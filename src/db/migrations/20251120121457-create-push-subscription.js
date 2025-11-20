@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      enspoint: {
+      endpoint: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
