@@ -1,32 +1,3 @@
-// 'use strict';
-
-// const { DataTypes } = require('sequelize');
-
-// module.exports = (sequelize) => {
-//   const Prelanding = sequelize.define('Prelanding', {
-//     templateName: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//     subdomain: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//       unique: true
-//     },
-//     templateData: {
-//       type: DataTypes.JSONB,
-//       allowNull: false,
-//     },
-//     status: {
-//       type: DataTypes.ENUM("pending", "faild", "repeat", "done"),
-//       allowNull: false,
-//       defaultValue: "pending"
-//     }
-//   });
-
-//   return Prelanding;
-// }
-
 'use strict';
 
 const { Model } = require('sequelize');
@@ -34,7 +5,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Prelanding extends Model {
     static associate(models) {
-      // Если будут связи — добавим сюда
     }
   }
 
@@ -57,7 +27,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("pending", "failed", "repeat", "done"),
         allowNull: false,
         defaultValue: "pending"
-      }
+      },
+      deployed_at: {
+         type: DataTypes.DATE,
+         allowNull: true,
+      },
+      error_message: {
+         type: DataTypes.TEXT,
+         allowNull: true,
+      },
     },
     {
       sequelize,

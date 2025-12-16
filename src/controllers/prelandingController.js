@@ -1,14 +1,12 @@
 const PrelandingService = require("../services/prelandingService");
-const { getSubdomain } = require("../helpers/getSubdomain");
-const { buildUrl } = require("../helpers/buildUrl");
+const { buildUrl, getSubdomain } = require("../helpers/buildUrl");
 const handleError = require("../helpers/errorHandler");
-
 
 module.exports = {
   async create(req, res) {
     try {
       const result = await PrelandingService.createPrelanding(req.body);
-        const url = buildUrl(result.subdomain);
+        const url = buildUrl(result.subdomain, process.env.URL_PREFIX);
       return res.status(201).json({
         url: url,
       });

@@ -1,8 +1,11 @@
 'use strict';
 
+require('./cron/deployPrelandings.cron');
+
 const express = require('express');
 const db = require('./db/models'); 
 const route = require('./routes/route');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
