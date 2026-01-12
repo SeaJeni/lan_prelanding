@@ -9,7 +9,7 @@ cron.schedule('*/5 * * * *', async () => {
 
     const prelandings = await Prelanding.findAll({
         where: {
-            status: ['pending_deploy', 'failed'],
+            status: ['pending', 'failed'],
         },
     });
 
