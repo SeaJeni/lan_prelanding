@@ -10,7 +10,7 @@ router.get("/api/prelanding/data", PrelandingController.data);
 router.post("/api/subscriptions/email", SubscriptionsController.email);
 router.post("/api/subscriptions/push", SubscriptionsController.push);
 
-router.post('/register', AuthController.register);
-router.post('/login', AuthController.login);
+router.post('/api/auth/register', AuthController.register);
+router.post('/api/auth/login', AuthController.login);
 
 module.exports = router;
