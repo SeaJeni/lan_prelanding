@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'PushSubscription',
-    tableName: 'PushSubscriptions',
+    tableName: 'push_subscriptions',
     timestamps: true
   });
   return PushSubscription;

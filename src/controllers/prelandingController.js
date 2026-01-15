@@ -5,8 +5,10 @@ const handleError = require("../helpers/errorHandler");
 module.exports = {
   async create(req, res) {
     try {
-      const result = await PrelandingService.createPrelanding(req.body);
-        const url = buildUrl(result.subdomain, process.env.URL_PREFIX);
+      const userId = req.user.userId;
+      const result = await PrelandingService.createPrelanding(req.body, userId);
+      const url = buildUrl(result.subdomain, process.env.URL_PREFIX);
+
       return res.status(201).json({
         url: url,
       });

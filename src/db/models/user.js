@@ -1,5 +1,19 @@
+'use strict';
+
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('User', {
+  class User extends Model {
+    static associate(models) {
+       User.hasMany(models.Prelanding, {
+        foreignKey: 'user_id',
+        as: 'prelandings',
+      });
+    }
+  }
+
+ User.init(
+  {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -15,7 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   }, {
-    tableName: 'users',
-    underscored: true,
+      sequelize,
+      modelName: 'User',
+      tableName: 'users',
+      underscored: true,
   });
+
+  return User;
 };

@@ -5,11 +5,19 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Prelanding extends Model {
     static associate(models) {
+       Prelanding.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        as: 'user',
+      });
     }
   }
 
   Prelanding.init(
     {
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       templateName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -40,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Prelanding',
-      tableName: 'Prelandings',  
+      tableName: 'prelandings',  
       timestamps: true
     }
   );

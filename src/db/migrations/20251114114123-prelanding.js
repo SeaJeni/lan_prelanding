@@ -4,7 +4,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Prelandings', {
+    await queryInterface.createTable('prelandings', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -43,9 +43,9 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Prelandings');
+    await queryInterface.dropTable('prelandings');
     await queryInterface.sequelize.query(
-      'DROP TYPE IF EXISTS "enum_Prelandings_status";'
+      'DROP TYPE IF EXISTS "enum_prelandings_status";'
     );
   },
 };

@@ -1,9 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-// usage
-// app.get('/api/profile', authMiddleware, (req, res) => {
-//   res.json({ user: req.user });
-// });
 module.exports = (req, res, next) => {
     const header = req.headers.authorization;
 

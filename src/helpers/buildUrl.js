@@ -1,29 +1,29 @@
-module.exports = {
+
   /**
    * @param {String} subdomain
    * @returns {String|Null} subdomain with domain
    */
-  addSubdomain(subdomain) {
+  function addSubdomain(subdomain) {
     return subdomain ? `${subdomain}.${process.env.MAIN_DOMAIN}` : null;
-  },
+  }
 
   /**
    * @param {String} subdomain
    * @param {String} prefix
    * @returns {String|Null} url
    */
-  buildUrl(subdomain, prefix) {
-    let domain = this.addSubdomain(subdomain);
+  function buildUrl(subdomain, prefix) {
+    let domain = addSubdomain(subdomain);
     if (!domain || !prefix) return null;
 
     return `${prefix}.${domain}`;
-  },
+  }
 
   /**
    * @param req
    * @returns {String|Null} subdomain
    */
-  getSubdomain(req) {
+  function getSubdomain(req) {
     if (!req || !req.headers.host) return null;
 
     const rawHost = req.headers.host;
@@ -40,4 +40,9 @@ module.exports = {
     const match = host.match(regex);
     return match ? match[1] : null;
   }
+
+  module.exports = {
+  addSubdomain,
+  buildUrl,
+  getSubdomain,
 };

@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'EmailSubscription',
-      tableName: 'EmailSubscriptions',
+      tableName: 'email_subscriptions',
       timestamps: true
     }
   );
