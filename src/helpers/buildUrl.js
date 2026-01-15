@@ -41,7 +41,7 @@
     return match ? match[1] : null;
   }
 
-  module.exports = {
+module.exports = {
   addSubdomain,
   buildUrl,
   getSubdomain,

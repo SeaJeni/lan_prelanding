@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         as: 'user',
       });
+
+      Prelanding.hasOne(models.EmailSubscription, {
+        foreignKey: 'prelanding_id',
+        as: 'emailSubscription',
+      });
     }
   }
 

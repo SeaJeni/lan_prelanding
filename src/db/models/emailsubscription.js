@@ -4,7 +4,12 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class EmailSubscription extends Model {
-    static associate(models) {}
+    static associate(models) {
+      EmailSubscription.belongsTo(models.Prelanding, {
+        foreignKey: 'prelanding_id',
+        as: 'prelanding',
+      });
+    }
   }
 
   EmailSubscription.init(
@@ -16,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail: true     
         }
+      },
+      prelanding_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique: true,
       }
     },
     {

@@ -3,7 +3,12 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class PushSubscription extends Model {
-    static associate(models) {}
+    static associate(models) {
+      PushSubscription.belongsTo(models.Prelanding, {
+        foreignKey: 'prelanding_id',
+        as: 'prelanding',
+      });
+    }
   }
   PushSubscription.init({
     endpoint: {
@@ -20,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       field: 'auth_key'
+    },
+    prelanding_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true,
     }
   }, {
     sequelize,

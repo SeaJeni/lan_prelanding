@@ -3,11 +3,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn('prelandings', 'user_id', {
+    await queryInterface.addColumn('email_subscriptions', 'prelanding_id', {
       type: Sequelize.INTEGER,
       allowNull: false,
+      unique: true,
       references: {
-        model: 'users',
+        model: 'prelandings',
         key: 'id',
       },
       onDelete: 'CASCADE',
@@ -15,6 +16,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('prelandings', 'user_id');
+    await queryInterface.removeColumn('email_subscriptions', 'prelanding_id');
   }
 };
