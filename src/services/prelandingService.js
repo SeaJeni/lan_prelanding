@@ -3,10 +3,12 @@ const { isValidString, isDuplicate, isValidObject } = require("../helpers/valida
 
 module.exports = {
   async createPrelanding(data, userId) {
-    const { templateName, subdomain, templateData } = data;
+    const { templateName, subdomain, templateData, geo, vertical } = data;
 
     isValidString(templateName);
     isValidString(subdomain);
+    isValidString(geo);
+    isValidString(vertical);
     isValidObject(templateData);
     await isDuplicate("Prelanding", "subdomain", subdomain);
   
@@ -15,7 +17,9 @@ module.exports = {
       subdomain,
       templateData,  
       user_id: userId,
-      status: "pending"   
+      status: "pending",
+      geo,
+      vertical
     });
     
     return item; 

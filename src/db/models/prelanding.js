@@ -49,6 +49,14 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.TEXT,
          allowNull: true,
       },
+      geo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      vertical: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }
     },
     {
       sequelize,
