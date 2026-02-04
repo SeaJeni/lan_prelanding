@@ -32,4 +32,33 @@ module.exports = {
     const item = await db.PushSubscription.create({ endpoint, p256dh, auth, prelanding_id: prelanding.id });
     return item;
   },
+
+  async createPushTask(data, files) {
+    const { prelandingName, geo, vertical, title, text, url } = data;
+    isValidString(prelandingName);
+    isValidString(geo);
+    isValidString(title);
+    isValidString(text);
+    isValidString(url);
+    isValidString(vertical);
+
+    const iconPath = files?.icon ? `/upload/push/icons/${files.icon.filename}` : null;
+    const imagePath = files?.image ? `/upload/push/images/${files.image.filename}` : null;
+
+    const item = await db.PushNotificationTask.create({
+      prelandingName,
+      geo,
+      vertical,
+      device: data.device,
+      title,
+      text,
+      url,
+      icon: iconPath,
+      image: imagePath,
+      status: 'pending',
+      subscriptionAge: data.subscriptionAge,
+    });
+
+    return item;
+  }
 };

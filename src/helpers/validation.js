@@ -12,9 +12,7 @@ module.exports = {
         }
     }, 
     async isDuplicate(modelName, field, value) {
-        console.log(modelName, field, value);
-        const model = db[modelName];
-        console.log(model);
+        const model = db[modelName];;
         if (!model) {
             throw new Error(`Model '${modelName}' not found`);
         }

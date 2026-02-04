@@ -37,5 +37,20 @@ module.exports = {
         } catch (error) {
             return handleError(res, error);
         }
+    },
+    async tasks(req, res) { 
+        try {
+            const iconFile = req.files?.icon?.[0];
+            const imageFile = req.files?.image?.[0];
+            
+            await SubscriptionsService.createPushTask(req.body, { icon: iconFile, image: imageFile });
+
+            return res.status(201).json({
+                status: "success",
+                message: "Push task created successfully"
+            });
+        } catch (error) {
+            return handleError(res, error);
+        }
     }
 };

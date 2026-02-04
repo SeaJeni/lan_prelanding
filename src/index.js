@@ -6,6 +6,7 @@ const express = require('express');
 const db = require('./db/models'); 
 const route = require('./routes/route');
 const passport = require('passport');
+const path = require('path');+
 
 require('./auth/passport'); 
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(route);
 app.use(passport.initialize());
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 app.listen(PORT, async () => {
   try {

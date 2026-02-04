@@ -1,6 +1,7 @@
 'use strict';
 
 const { Model } = require('sequelize');
+const { PRELANDING_STATUSES } = require('../../constants/enums');
 
 module.exports = (sequelize, DataTypes) => {
   class Prelanding extends Model {
@@ -37,9 +38,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       status: {
-        type: DataTypes.ENUM("pending", "failed", "repeat", "deployed"),
+        type: DataTypes.ENUM(...PRELANDING_STATUSES),
         allowNull: false,
-        defaultValue: "pending"
+        defaultValue: "pending",
       },
       deployed_at: {
          type: DataTypes.DATE,
