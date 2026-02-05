@@ -7,12 +7,12 @@ module.exports = (sequelize, DataTypes) => {
   class Prelanding extends Model {
     static associate(models) {
        Prelanding.belongsTo(models.User, {
-        foreignKey: 'user_id',
+        foreignKey: 'userId',
         as: 'user',
       });
 
       Prelanding.hasOne(models.EmailSubscription, {
-        foreignKey: 'prelanding_id',
+        foreignKey: 'prelandingId',
         as: 'emailSubscription',
       });
     }
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Prelanding.init(
     {
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

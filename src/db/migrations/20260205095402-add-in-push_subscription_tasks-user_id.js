@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn('prelandings', 'userId', {
+   await queryInterface.addColumn('push_notification_tasks', 'userId', {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
@@ -15,6 +15,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('prelandings', 'userId');
+    await queryInterface.removeColumn('push_notification_tasks', 'userId');
   }
 };

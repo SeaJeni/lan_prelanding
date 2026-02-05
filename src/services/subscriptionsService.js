@@ -46,6 +46,7 @@ module.exports = {
     const imagePath = files?.image ? `/upload/push/images/${files.image.filename}` : null;
 
     const item = await db.PushNotificationTask.create({
+      userId: data.userId,
       prelandingName,
       geo,
       vertical,

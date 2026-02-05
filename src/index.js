@@ -1,6 +1,7 @@
 'use strict';
 
-require('./cron/deployPrelandings.cron');
+const startDeployPrelandingCron = require('./cron/deployPrelandingСron');
+const startPushTaskCron = require('./cron/pushTaskCron');
 
 const express = require('express');
 const db = require('./db/models'); 
@@ -19,6 +20,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(route);
 app.use(passport.initialize());
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
+
+startDeployPrelandingCron();
+startPushTaskCron();
 
 app.listen(PORT, async () => {
   try {

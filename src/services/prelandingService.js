@@ -16,7 +16,7 @@ module.exports = {
       templateName,
       subdomain,
       templateData,  
-      user_id: userId,
+      userId: userId,
       status: "pending",
       geo,
       vertical
