@@ -6,7 +6,7 @@ const express = require('express');
 const db = require('./db/models'); 
 const route = require('./routes/route');
 const passport = require('passport');
-const path = require('path');+
+const path = require('path');
 
 require('./auth/passport'); 
 
