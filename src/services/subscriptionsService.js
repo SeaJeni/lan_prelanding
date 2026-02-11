@@ -61,5 +61,27 @@ module.exports = {
     });
 
     return item;
+  },
+
+   async getUserTasks({ userId, page, limit }) {
+
+    const offset = (page - 1) * limit;
+
+    const { rows, count } = await db.PushNotificationTask.findAndCountAll({
+      where: { userId: userId },
+      order: [['createdAt', 'DESC']],
+      limit,
+      offset,
+    });
+
+    return {
+      data: rows,
+      pagination: {
+        page,
+        limit,
+        total: count,
+        totalPages: Math.ceil(count / limit),
+      },
+    };
   }
 };

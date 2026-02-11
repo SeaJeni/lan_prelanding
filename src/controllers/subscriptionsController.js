@@ -20,6 +20,8 @@ module.exports = {
             return handleError(res, error);
         }
     },
+
+    
     async push(req, res) { 
           try {
             const subdomain = getSubdomain(req);
@@ -38,6 +40,7 @@ module.exports = {
             return handleError(res, error);
         }
     },
+
     async tasks(req, res) { 
         try {
             const iconFile = req.files?.icon?.[0];
@@ -52,5 +55,34 @@ module.exports = {
         } catch (error) {
             return handleError(res, error);
         }
-    }
+    },
+
+    async getTasks(req, res) {
+        try {
+            const userId = req.user.userId;
+
+            let { page = 1, limit = 10 } = req.query;
+     
+            page = Number(page);
+            limit = Number(limit);
+
+            if (Number.isNaN(page) || page < 1) {
+                return res.status(400).json({ message: 'Invalid page' });
+            }
+      
+            if (Number.isNaN(limit) || limit < 1 || limit > 100) {
+                return res.status(400).json({ message: 'Invalid limit' });
+            }
+      
+            const result = await SubscriptionsService.getUserTasks({
+                userId,
+                page,
+                limit,
+            });
+
+            return res.json(result);
+        } catch (error) {
+             return handleError(res, error);
+     }
+  }
 };

@@ -17,6 +17,7 @@ router.post("/api/subscriptions/push/tasks",  upload.fields([
     { name: 'icon', maxCount: 1 },
     { name: 'image', maxCount: 1 },
   ]), SubscriptionsController.tasks);
+router.get("/api/push/tasks", authMiddleware, SubscriptionsController.getTasks);
 
 router.post('/api/auth/register', AuthController.register);
 router.post('/api/auth/login', AuthController.login);
