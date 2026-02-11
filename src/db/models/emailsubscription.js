@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class EmailSubscription extends Model {
     static associate(models) {
       EmailSubscription.belongsTo(models.Prelanding, {
-        foreignKey: 'prelanding_id',
+        foreignKey: 'prelandingId',
         as: 'prelanding',
       });
     }
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true     
         }
       },
-      prelanding_id: {
+      prelandingId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,

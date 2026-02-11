@@ -18,7 +18,7 @@ module.exports = {
         }
         
         const exists = await model.findOne({ where: { [field]: value } });
-        console.log(exists);
+
         if (exists) {
             throw { type: "conflict" };
         }

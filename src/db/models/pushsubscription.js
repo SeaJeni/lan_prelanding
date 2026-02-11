@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class PushSubscription extends Model {
     static associate(models) {
       PushSubscription.belongsTo(models.Prelanding, {
-        foreignKey: 'prelanding_id',
+        foreignKey: 'prelandingId',
         as: 'prelanding',
       });
     }
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'auth_key'
     },
-    prelanding_id: {
+    prelandingId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,

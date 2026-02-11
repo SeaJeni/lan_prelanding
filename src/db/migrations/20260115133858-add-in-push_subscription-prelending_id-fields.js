@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn('push_subscriptions', 'prelanding_id', {
+    await queryInterface.addColumn('push_subscriptions', 'prelandingId', {
       type: Sequelize.INTEGER,
       allowNull: false,
       unique: true,
@@ -16,6 +16,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('push_subscriptions', 'prelanding_id');
+    await queryInterface.removeColumn('push_subscriptions', 'prelandingId');
   }
 };

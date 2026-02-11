@@ -24,7 +24,7 @@ class DeploymentService {
         try {
             const templatePath = path.join(
                 TEMPLATES_ROOT,
-                prelanding.template_name
+                prelanding.templateName
             );
 
             Logger.info({ ...ctx, step: 'check_template' }, 'Checking template');

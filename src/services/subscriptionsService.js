@@ -13,11 +13,11 @@ module.exports = {
     if (!prelanding) {
       throw new Error('Prelanding not found');
     }
-    const item = await db.EmailSubscription.create({ email, prelanding_id: prelanding.id });
+    const item = await db.EmailSubscription.create({ email, prelandingId: prelanding.id });
     return item;
   },
    async createPushSubscription(data, subdomain) {
-    const {  endpoint, keys } = data;
+    const { endpoint, keys } = data;
     
     isValidString(endpoint);
     isValidObject(keys);
@@ -29,18 +29,18 @@ module.exports = {
     await isDuplicate("PushSubscription", "endpoint", endpoint);
     const prelanding = await PrelandingService.getPrelandingBySubdomain(subdomain);
 
-    const item = await db.PushSubscription.create({ endpoint, p256dh, auth, prelanding_id: prelanding.id });
+    const item = await db.PushSubscription.create({ endpoint, p256dh, auth, prelandingId: prelanding.id });
     return item;
   },
 
   async createPushTask(data, files) {
     const { prelandingName, geo, vertical, title, text, url } = data;
-    isValidString(prelandingName);
-    isValidString(geo);
+    !!prelandingName ?? isValidString(prelandingName);
+    !!geo ?? isValidString(geo);
+    !!vertical ?? isValidString(vertical);
     isValidString(title);
     isValidString(text);
     isValidString(url);
-    isValidString(vertical);
 
     const iconPath = files?.icon ? `/upload/push/icons/${files.icon.filename}` : null;
     const imagePath = files?.image ? `/upload/push/images/${files.image.filename}` : null;

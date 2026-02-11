@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 const Logger = require('../helpers/logger');
-const PrelandingService = require('../services/prelandingService');
+const DeploymentService = require('../services/deploymentService');
 const db = require('../db/models');
 
 const CRON_INTERVAL =
@@ -42,7 +42,7 @@ module.exports = function startDeployPrelandingsCron() {
         });
 
         try {
-          await PrelandingService.deploy(prelanding);
+          await DeploymentService.deploy(prelanding);
 
           await prelanding.update({
             status: 'deployed',

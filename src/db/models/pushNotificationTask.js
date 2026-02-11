@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class PushNotificationTask extends Model {
     static associate(models) {
       PushNotificationTask.belongsTo(models.Prelanding, {
-        foreignKey: 'prelanding_id',
+        foreignKey: 'prelandingId',
         as: 'prelanding',
       });
       PushNotificationTask.belongsTo(models.User, {
@@ -23,15 +23,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     prelandingName: { 
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     geo: { 
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     vertical: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     }, 
     device: {
       type: DataTypes.STRING,

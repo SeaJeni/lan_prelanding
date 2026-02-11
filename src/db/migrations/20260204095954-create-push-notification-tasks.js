@@ -13,17 +13,17 @@ module.exports = {
 
       prelandingName: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       geo: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       vertical: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       device: {
