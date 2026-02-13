@@ -72,6 +72,12 @@ module.exports = {
       order: [['createdAt', 'DESC']],
       limit,
       offset,
+      attributes: [
+        'id',
+        'status',
+        'sentCount',
+        'createdAt',
+      ],
     });
 
     return {

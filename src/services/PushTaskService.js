@@ -71,10 +71,17 @@ class PushTaskService {
 
     const prelandingIds = prelandings.map(p => p.id);
     const ageCondition = this.buildAgeCondition(task.subscriptionAge);
+    const minIntervalMinutes = Number(process.env.PUSH_SEND_MIN_INTERVAL_MINUTES) || 60;
+    const intervalDate = new Date(Date.now() - minIntervalMinutes * 60 * 1000);
+
     
     const where = {
       prelandingId: { [Op.in]: prelandingIds },
       ...(ageCondition || {}),
+      [Op.or]: [
+        { lastSentAt: null },
+        { lastSentAt: { [Op.lte]: intervalDate } },
+      ],
     };
 
     const subscriptions = await db.PushSubscription.findAll({ where });
@@ -99,15 +106,31 @@ class PushTaskService {
 
     for (let i = 0; i < filtered.length; i += batchSize) {
       const batch = filtered.slice(i, i + batchSize);
+      let successCount = 0;
 
       Logger.info('[PushTaskService] sending batch', {
         taskId: task.id,
         batch: `${i}-${i + batch.length}`,
       });
 
-      await Promise.all(
-        batch.map(sub => sendPush(sub, task))
+      await Promise.allSettled(
+        batch.map(async (sub) => {
+          try {
+            await sendPush(sub, task);
+            await sub.update({lastSentAt: new Date(),});
+            successCount++;
+          } catch (err) {
+            Logger.error('[PushTask] send failed', {
+              subscriptionId: sub.id,
+              error: err.message,          
+            });
+          }
+        })
       );
+
+      if (successCount > 0) {
+        await task.increment('sentCount', { by: successCount });
+      }
 
       await this.delay(200);
     }
