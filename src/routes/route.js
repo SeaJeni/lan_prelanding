@@ -5,6 +5,7 @@ const PrelandingController = require("../controllers/prelandingController");
 const SubscriptionsController = require("../controllers/subscriptionsController");
 const BillingController = require('../controllers/billingController');
 const AuthController = require('../controllers/authController');
+const BillingWebhookController = require('../controllers/billingWebhookController');
 const { signToken } = require('../helpers/jwt');
 const authMiddleware = require('../middleware/authMiddleware');
 const upload = require('../middleware/uploadPush');
@@ -37,5 +38,6 @@ router.get( '/api/auth/google/callback', passport.authenticate('google', {sessio
 
 
 router.post('/api/billing/checkout', authMiddleware, BillingController.createCheckout);
+router.post('/api/billing/webhook', BillingWebhookController.handle);
 
 module.exports = router;

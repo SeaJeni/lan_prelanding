@@ -14,7 +14,7 @@ require('./auth/passport');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+app.use('/api/billing/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(route);

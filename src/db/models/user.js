@@ -32,6 +32,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    subscriptionType: {
+       type: DataTypes.STRING,
+       allowNull: true,
+    },
+    subscriptionStatus: {
+      type: DataTypes.STRING,
+       allowNull: true,
+    },
+    subscriptionStartedAt: {
+       type: DataTypes.DATE,
+       allowNull: true,
+    },
+    stripeCustomerId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    stripeSubscriptionId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, {
       sequelize,
       modelName: 'User',
