@@ -38,9 +38,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       status: {
-        type: DataTypes.ENUM(...PRELANDING_STATUSES),
-        allowNull: false,
-        defaultValue: "pending",
+         type: DataTypes.STRING,
+         allowNull: false,
+         defaultValue: "pending",
+         validate: {
+          isIn: [[...PRELANDING_STATUSES]],
+         }
       },
       deployed_at: {
          type: DataTypes.DATE,
@@ -57,6 +60,10 @@ module.exports = (sequelize, DataTypes) => {
       vertical: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       }
     },
     {

@@ -34,6 +34,10 @@ class DeploymentService {
             const domain = buildUrl(prelanding.subdomain, process.env.URL_PREFIX);
             const deployPath = buildUrl(prelanding.subdomain, process.env.DEPLOY_PATH_PATTERN);
 
+            if (deployPath?.startsWith(process.env.DEPLOY_PATH_PATTERN)) {
+                throw new Error('Unsafe path');
+            }
+
             Logger.info(
                 { ...ctx, step: 'paths_resolved', domain, deployPath },
                 'Paths resolved'
@@ -77,6 +81,60 @@ class DeploymentService {
         }
     }
 
+    static async remove(prelanding) {
+
+        Logger.info('[CleanUpSubscriptionCron] prelanding', {
+            prelandingId: prelanding.id,
+            subdomain: prelanding.subdomain,
+        });
+
+        try {
+            // delete DNS - optional, as it will be needed for future deployments with the same subdomain
+            // try {
+            //     await HostingApi.deleteSubdomain(prelanding.subdomain);
+            // } catch (err) {
+            //     Logger.warn('[CleanUpSubscriptionCron] dns_missing', {
+            //         subdomain: prelanding.subdomain,
+            //     });
+            // }
+
+            // delete directory
+            const deployPath = buildUrl(prelanding.subdomain, process.env.DEPLOY_PATH_PATTERN);
+
+            if (deployPath?.startsWith(process.env.DEPLOY_PATH_PATTERN)) {
+                throw new Error('Unsafe path');
+            }
+
+            try {
+                await fs.rm(deployPath, { recursive: true, force: true, });
+            } catch (err) {
+                Logger.warn('[CleanUpSubscriptionCron] dir_missing', {
+                    path: deployPath,
+                });
+            }
+
+            // update database record
+            await prelanding.update({
+                status: 'deleted_due_to_subscription',
+                isActive: false,
+            });
+
+            Logger.info('[CleanUpSubscriptionCron] success', {
+                prelandingId: prelanding.id,
+            });
+
+        } catch (err) {
+
+            Logger.error('[CleanUpSubscriptionCron] error', {
+                prelandingId: prelanding.id,
+                error: err.message,
+            });
+
+            throw err;
+        }
+
+    }
+
     // ---------- helpers ----------
 
     static async ensureTemplateExists(templatePath) {
@@ -105,7 +163,7 @@ class DeploymentService {
     }
 
     static async setPermissions(targetPath) {
-        // nginx обычно работает от www-data
+        // nginx usually runs from www-data
         await DeploymentService.execSafe(`chown -R www-data:www-data ${targetPath}`);
         await DeploymentService.execSafe(`chmod -R 755 ${targetPath}`);
     }

@@ -52,6 +52,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    subscriptionCanceledAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    }
   }, {
       sequelize,
       modelName: 'User',

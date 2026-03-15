@@ -105,6 +105,26 @@ class StripeWebhookService {
     });
   }
 
+  static async handleSubscriptionDeleted(subscription) {
+
+    const stripeCustomerId = subscription.customer;
+
+    const user = await db.User.findOne({
+      where: { stripeCustomerId },
+    });
+
+    if (!user) return;
+
+    await user.update({
+      subscriptionStatus: 'canceled',
+      subscriptionCanceledAt: new Date(),
+    });
+
+    Logger.info('[StripeWebhook] subscription canceled', {
+      userId: user.id,
+    });
+  }
+
 }
 
 module.exports = StripeWebhookService;

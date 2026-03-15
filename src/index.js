@@ -2,6 +2,7 @@
 
 const startDeployPrelandingCron = require('./cron/deployPrelandingСron');
 const startPushTaskCron = require('./cron/pushTaskCron');
+const subscriptionCleanupCron = require('./cron/subscriptionCleanupCron');
 
 const express = require('express');
 const db = require('./db/models'); 
@@ -23,6 +24,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 startDeployPrelandingCron();
 startPushTaskCron();
+subscriptionCleanupCron();
 
 app.listen(PORT, async () => {
   try {

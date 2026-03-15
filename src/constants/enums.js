@@ -3,7 +3,8 @@ module.exports = {
     'pending', 
     'failed', 
     'repeat',
-    'deployed'
+    'deployed',
+    'deleted_due_to_subscription'
   ],
 
   PUSH_TASK_STATUSES: [

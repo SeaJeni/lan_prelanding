@@ -3,8 +3,7 @@ const Logger = require('../helpers/logger');
 const DeploymentService = require('../services/deploymentService');
 const db = require('../db/models');
 
-const CRON_INTERVAL =
-  process.env.DEPLOY_PRELANDINGS_CRON_INTERVAL || '*/5 * * * *';
+const CRON_INTERVAL = process.env.DEPLOY_PRELANDINGS_CRON_INTERVAL || '*/5 * * * *';
 
 module.exports = function startDeployPrelandingsCron() {
   Logger.info('[DeployPrelandingsCron] started', {
@@ -46,6 +45,7 @@ module.exports = function startDeployPrelandingsCron() {
 
           await prelanding.update({
             status: 'deployed',
+            isActive: true,
             deployed_at: new Date(),
             error_message: null,
           });
@@ -58,6 +58,7 @@ module.exports = function startDeployPrelandingsCron() {
         } catch (err) {
           await prelanding.update({
             status: 'failed',
+            isActive: false,
             error_message: err.message,
           });
 
