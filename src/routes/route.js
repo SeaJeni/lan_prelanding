@@ -15,7 +15,7 @@ router.get("/api/prelanding/data", PrelandingController.data);
 
 router.post("/api/subscriptions/email", SubscriptionsController.email);
 router.post("/api/subscriptions/push", SubscriptionsController.push);
-router.post("/api/subscriptions/push/tasks",  upload.fields([
+router.post("/api/subscriptions/push/tasks", authMiddleware, upload.fields([
     { name: 'icon', maxCount: 1 },
     { name: 'image', maxCount: 1 },
   ]), SubscriptionsController.tasks);
