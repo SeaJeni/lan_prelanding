@@ -36,8 +36,8 @@ router.get( '/api/auth/google/callback', passport.authenticate('google', {sessio
   }
 );
 
-
 router.post('/api/billing/checkout', authMiddleware, BillingController.createCheckout);
+router.post('/api/billing/cancel', authMiddleware, BillingController.cancel);
 router.post('/api/billing/webhook', BillingWebhookController.handle);
 
 module.exports = router;

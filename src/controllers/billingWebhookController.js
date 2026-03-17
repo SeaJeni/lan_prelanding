@@ -5,9 +5,7 @@ const Logger = require('../helpers/logger');
 class BillingWebhookController {
 
   static async handle(req, res) {
-
     const signature = req.headers['stripe-signature'];
-
     let event;
 
     try {
@@ -17,14 +15,12 @@ class BillingWebhookController {
         process.env.STRIPE_WEBHOOK_SECRET
       );
     } catch (err) {
-
       Logger.error('[StripeWebhook] signature failed', err.message);
 
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     try {
-
       switch (event.type) {
 
         case 'checkout.session.completed':
@@ -50,9 +46,8 @@ class BillingWebhookController {
       }
 
       res.json({ received: true });
-
     } catch (err) {
-
+      
       Logger.error('[StripeWebhook] processing error', err);
 
       res.status(500).json({
@@ -60,7 +55,6 @@ class BillingWebhookController {
       });
     }
   }
-
 }
 
 module.exports = BillingWebhookController;

@@ -1,4 +1,5 @@
 const stripe = require('./stripeClient');
+const db = require('../db/models');
 
 const priceMap = {
   trial: process.env.STRIPE_PRICE_TRIAL,
@@ -20,7 +21,6 @@ class BillingService {
   }
 
   static async createCheckoutSession({ subscriptionType, userId, email }) {
-
     const priceId = this.getPriceId(subscriptionType);
 
     const session = await stripe.checkout.sessions.create({
@@ -46,6 +46,42 @@ class BillingService {
 
     return session.url;
   }
+
+  static async cancel(userId) {
+    const user = await db.User.findByPk(userId);
+
+    if (
+      !user ||
+      !user.stripeSubscriptionId ||
+      user.subscriptionStatus !== 'active'
+    ) {
+      throw new Error('NO_ACTIVE_SUBSCRIPTION');
+    }
+
+    const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+
+    if (subscription.cancel_at_period_end) {
+      return {
+        success: true,
+        message: 'Subscription already scheduled for cancellation'
+      };
+    }
+
+    await stripe.subscriptions.update(
+      user.stripeSubscriptionId,
+      {
+        cancel_at_period_end: true
+      }
+    );
+
+    return {
+      success: true,
+      message:
+        'Subscription will be canceled at the end of the billing period'
+    };
+
+  }
+
 }
 
 module.exports = BillingService;
