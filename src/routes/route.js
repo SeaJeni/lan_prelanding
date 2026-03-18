@@ -12,6 +12,7 @@ const upload = require('../middleware/uploadPush');
 
 router.post("/api/prelanding/create", authMiddleware, PrelandingController.create);
 router.get("/api/prelanding/data", PrelandingController.data);
+router.put("/api/prelanding/:id", authMiddleware, PrelandingController.update);
 
 router.post("/api/subscriptions/email", SubscriptionsController.email);
 router.post("/api/subscriptions/push", SubscriptionsController.push);

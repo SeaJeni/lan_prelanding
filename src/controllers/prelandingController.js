@@ -16,6 +16,7 @@ module.exports = {
       return handleError(res, error);
     }
   },
+
   async data(req, res) {
     try {
       const subdomain = getSubdomain(req);
@@ -41,5 +42,26 @@ module.exports = {
       console.error(err);
       return res.status(500).json({ error: "Server error" });
     }
-  }
+  },
+
+  async update(req, res) {
+    try {
+      const userId = req.user.userId;
+      const { id } = req.params;
+    
+      if (!id || !userId) {
+        return res.status(400).json({ error: "Invalid request data" });
+      }
+      
+      const result = await PrelandingService.updatePrelanding(id, req.body, userId);
+
+      return res.status(201).json({
+                    status: "success",
+                    data: result
+                });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Server error" });
+    }
+  },
 };
