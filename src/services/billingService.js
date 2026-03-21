@@ -1,17 +1,11 @@
 const stripe = require('./stripeClient');
 const db = require('../db/models');
-
-const priceMap = {
-  trial: process.env.STRIPE_PRICE_TRIAL,
-  standard: process.env.STRIPE_PRICE_STANDARD,
-  pro: process.env.STRIPE_PRICE_PRO,
-  enterprise: process.env.STRIPE_PRICE_ENTERPRISE,
-};
+const { SUBSCRIPTION_PRICE_MAP } = require('../constants/enums');
 
 class BillingService {
 
   static getPriceId(subscriptionType) {
-    const priceId = priceMap[subscriptionType];
+    const priceId = SUBSCRIPTION_PRICE_MAP[subscriptionType];
 
     if (!priceId) {
       throw new Error('Invalid subscriptionType');
@@ -22,11 +16,24 @@ class BillingService {
 
   static async createCheckoutSession({ subscriptionType, userId, email }) {
     const priceId = this.getPriceId(subscriptionType);
+    const user = await db.User.findByPk(userId);
+    let customerId = user.stripeCustomerId;
+
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: user.email
+      });
+
+      customerId = customer.id;
+
+      await user.update({
+        stripeCustomerId: customerId
+      });
+    }
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
-
-      customer_email: email,
+      customer: customerId,
 
       line_items: [
         {

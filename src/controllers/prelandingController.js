@@ -13,6 +13,17 @@ module.exports = {
         url: url,
       });
     } catch (error) {
+
+      if (error.message === "Prelanding limit reached") {
+
+        return res.status(403).json({
+          error: "limit_reached",
+          message: "You have reached your plan limit.",
+          currentCount: error.extra.currentCount,
+          planLimit: error.extra.planLimit
+        });
+      }
+
       return handleError(res, error);
     }
   },
@@ -48,20 +59,19 @@ module.exports = {
     try {
       const userId = req.user.userId;
       const { id } = req.params;
-    
+
       if (!id || !userId) {
         return res.status(400).json({ error: "Invalid request data" });
       }
-      
+
       const result = await PrelandingService.updatePrelanding(id, req.body, userId);
 
       return res.status(201).json({
-                    status: "success",
-                    data: result
-                });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Server error" });
+        status: "success",
+        data: result
+      });
+    } catch (error) {
+      return handleError(res, error);
     }
   },
 };
